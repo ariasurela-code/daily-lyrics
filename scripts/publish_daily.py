@@ -15,6 +15,13 @@ START = datetime.date(2026, 1, 1)  # archive start
 today = datetime.date.today()
 
 def entry_for(d):
+    for s in songs:
+        if s.get("date") == d.isoformat():
+            return s
+    songs_rot = [s for s in songs if "date" not in s]
+    return songs_rot[(d - datetime.date(1970, 1, 1)).days % len(songs_rot)]
+
+def _old(d):
     return songs[(d - datetime.date(1970, 1, 1)).days % len(songs)]
 
 def render(entry):
